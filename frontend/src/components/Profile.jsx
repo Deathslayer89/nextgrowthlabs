@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const [profile, setProfile] = useState({});
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login');
+    } 
+  }, [navigate]);
 
   useEffect(() => {
     fetchProfileData();
@@ -19,7 +27,7 @@ const Profile = () => {
         }
       };
 
-      const response = await axios.get('https://nextlabs-8fsb.onrender.com/api/accounts/me/', config);
+      const response = await axios.get(process.env.REACT_APP_BACKEND_URL+'/api/accounts/me/', config);
       setProfile(response.data);
     } catch (error) {
       console.error('Error fetching profile data:', error.response);

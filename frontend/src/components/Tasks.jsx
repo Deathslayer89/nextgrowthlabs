@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login');
+    }
+  }, [navigate]);
   useEffect(() => {
     fetchTasks();
   }, []);
@@ -20,7 +27,7 @@ const Tasks = () => {
         }
       };
 
-      const response = await axios.get('https://nextlabs-8fsb.onrender.com/api/main/tasks/completed/', config);
+      const response = await axios.get(process.env.REACT_APP_BACKEND_URL+'/api/main/tasks/completed/', config);
       setTasks(response.data);
       setLoading(false);
     } catch (error) {

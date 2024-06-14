@@ -12,7 +12,7 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("https://nextlabs-8fsb.onrender.com/api/accounts/register/", {
+      await axios.post(process.env.REACT_APP_BACKEND_URL+"/api/accounts/register/", {
         username: username,
         password: password,
         email: email,

@@ -43,7 +43,7 @@ def create_tasks_for_new_user(sender, instance, created, **kwargs):
                 app=app,
                 taskname=f'Download {app.appname}',
                 description=f'Download and install the {app.appname} app.',
-                app_image=app.image  # Set the app_image field to the app's image
+                app_image=app.image  
             )
 
 # Signal to create tasks for all users when a new app is added
@@ -57,5 +57,5 @@ def create_tasks_for_new_app(sender, instance, created, **kwargs):
                 app=instance,
                 taskname=f'Download {instance.appname}',
                 description=f'Download and install the {instance.appname} app.',
-                app_image=instance.image  # Set the app_image field to the app's image
+                app_image=instance.image 
             )

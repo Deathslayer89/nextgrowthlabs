@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const UserDashboard = () => {
   const [pendingTasks, setPendingTasks] = useState([]);
   const [currentTaskId, setCurrentTaskId] = useState(null);
   const [screenshotFile, setScreenshotFile] = useState(null);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login');
+    }
+  }, [navigate]);
 
   useEffect(() => {
     fetchPendingTasks();
@@ -21,7 +29,7 @@ const UserDashboard = () => {
         }
       };
 
-      const response = await axios.get('https://nextlabs-8fsb.onrender.com/api/main/tasks/pending/', config);
+      const response = await axios.get(process.env.REACT_APP_BACKEND_URL+'/api/main/tasks/pending/', config);
       console.log(response);
       setPendingTasks(response.data);
     } catch (error) {
@@ -46,7 +54,7 @@ const UserDashboard = () => {
         },
       };
 
-      const response = await axios.put(`https://nextlabs-8fsb.onrender.com/api/main/tasks/${currentTaskId}/complete/`, formData, config);
+      const response = await axios.put(`{process.env.REACT_APP_BACKEND_URL}/api/main/tasks/${currentTaskId}/complete/`, formData, config);
       console.log('Task completed successfully:', response.data);
 
       // Refresh user data after completing task

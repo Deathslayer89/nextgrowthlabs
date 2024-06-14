@@ -10,12 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import dj_database_url
 import os
 from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv
-
- # Load environment variables from .env file
+import cloudinary_storage
+import cloudinary
+# Load environment variables from .env file
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY=os.getenv('DJANGO_SECRET_KEY')
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -41,17 +43,17 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "cloudinary_storage",
+    "cloudinary",
     "rest_framework",
     "rest_framework_simplejwt",
     "accounts",
     "main",
     "corsheaders",
-    # "whitenoise.runserver_nostatic",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    # "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -64,6 +66,13 @@ MIDDLEWARE = [
 ROOT_URLCONF = "myapp.urls"
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUD_NAME'),
+    'API_KEY': os.getenv('API_KEY'),
+    'API_SECRET': os.getenv('API_SECRET'),
+    'SIGNATURE_ALGORITHM': 'sha256'
+}
 
 TEMPLATES = [
     {
@@ -83,7 +92,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "myapp.wsgi.application"
 
-import dj_database_url
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -151,7 +159,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=50),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=50),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
@@ -174,13 +182,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Custom user model setting
 AUTH_USER_MODEL = 'accounts.CustomUser'
-# if not DEBUG:
-#     WHITENOISE_USE_FINDERS = True
-#     WHITENOISE_MANIFEST_STRICT = False
-#     WHITENOISE_STATIC_PREFIX = '/static/'
-#     WHITENOISE_STATIC_ROOT = STATIC_ROOT
-#     WHITENOISE_MEDIA_PREFIX = '/media/'
-#     WHITENOISE_MEDIA_ROOT = MEDIA_ROOT
-    
 
-# DEFAULT_FILE_STORAGE = 'myapp.storage.WhiteNoiseMediaStorage'
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

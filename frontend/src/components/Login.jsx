@@ -27,7 +27,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "https://nextlabs-8fsb.onrender.com/api/accounts/login/",
+        process.env.REACT_APP_BACKEND_URL + "/api/accounts/login/",
         {
           username: username,
           password: password,

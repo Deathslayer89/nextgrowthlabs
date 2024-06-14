@@ -30,7 +30,7 @@ const AppForm = ({ onSuccess }) => {
         },
       };
 
-      await axios.post("https://nextlabs-8fsb.onrender.com/api/main/apps/create/", formData, config);
+      await axios.post(process.env.REACT_APP_BACKEND_URL+`/api/main/apps/create/`, formData, config);
       setSuccess(true);
       setAppName("");
       setAppCategory("");
@@ -144,7 +144,7 @@ const AdminDashboard = () => {
         },
       };
 
-      const response = await axios.get("https://nextlabs-8fsb.onrender.com/api/main/apps/", config);
+      const response = await axios.get(process.env.REACT_APP_BACKEND_URL+"/api/main/apps/", config);
       setApps(response.data);
     } catch (error) {
       console.error("Fetch Apps Error:", error);
