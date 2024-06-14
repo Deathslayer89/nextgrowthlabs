@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
 
@@ -10,7 +10,6 @@ const AppForm = ({ onSuccess }) => {
   const [image, setImage] = useState(null);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,7 +62,7 @@ const AppForm = ({ onSuccess }) => {
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block mb-1">App Name:</label>
+          <label className="block mb-1 text-sm">App Name:</label>
           <input
             type="text"
             value={appname}
@@ -73,7 +72,7 @@ const AppForm = ({ onSuccess }) => {
           />
         </div>
         <div>
-          <label className="block mb-1">App Category:</label>
+          <label className="block mb-1 text-sm">App Category:</label>
           <input
             type="text"
             value={appcategory}
@@ -83,7 +82,7 @@ const AppForm = ({ onSuccess }) => {
           />
         </div>
         <div>
-          <label className="block mb-1">App Link:</label>
+          <label className="block mb-1 text-sm">App Link:</label>
           <input
             type="url"
             value={applink}
@@ -93,7 +92,7 @@ const AppForm = ({ onSuccess }) => {
           />
         </div>
         <div>
-          <label className="block mb-1">Points:</label>
+          <label className="block mb-1 text-sm">Points:</label>
           <input
             type="number"
             value={points}
@@ -103,7 +102,7 @@ const AppForm = ({ onSuccess }) => {
           />
         </div>
         <div>
-          <label className="block mb-1">App Image:</label>
+          <label className="block mb-1 text-sm">App Image:</label>
           <input
             type="file"
             onChange={handleFileChange}
@@ -112,7 +111,10 @@ const AppForm = ({ onSuccess }) => {
           />
         </div>
         <div>
-          <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-200">
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-200"
+          >
             Add App
           </button>
         </div>
@@ -123,9 +125,32 @@ const AppForm = ({ onSuccess }) => {
 
 const AdminDashboard = () => {
   const token = localStorage.getItem("token");
-  const isAdmin = localStorage.getItem("isAdmin") === 'true';
+  const isAdmin = localStorage.getItem("isAdmin") === "true";
   const navigate = useNavigate();
+  const [apps, setApps] = useState([]);
+  const [error, setError] = useState(null);
   const [showForm, setShowForm] = useState(false);
+
+  useEffect(() => {
+    fetchApps();
+  }, []);
+
+  const fetchApps = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const response = await axios.get("https://nextlabs-8fsb.onrender.com/api/main/apps/", config);
+      setApps(response.data);
+    } catch (error) {
+      console.error("Fetch Apps Error:", error);
+      setError("Failed to fetch apps. Please try again.");
+    }
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -142,17 +167,50 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white shadow-md rounded-md">
+    <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-md">
       <h2 className="text-2xl font-semibold mb-6 text-gray-800">Welcome to Admin Dashboard</h2>
       <div className="flex justify-between items-center mb-4">
-        <button onClick={handleLogout} className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition duration-200">
+        <button
+          onClick={handleLogout}
+          className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition duration-200"
+        >
           Logout
         </button>
-        <button onClick={toggleFormVisibility} className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition duration-200">
+        <button
+          onClick={toggleFormVisibility}
+          className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition duration-200"
+        >
           {showForm ? "Hide Add Apps" : "Add Apps"}
         </button>
       </div>
-      {showForm && <AppForm onSuccess={() => setShowForm(false)} />}
+      {showForm && <AppForm onSuccess={fetchApps} />}
+      <div className="mt-4">
+        <h3 className="text-xl font-semibold mb-2">Created Apps:</h3>
+        {error && <p className="text-red-500">{error}</p>}
+        {apps.length === 0 ? (
+          <p>No apps created yet.</p>
+        ) : (
+          <ul className="divide-y divide-gray-300">
+            {apps.map((app) => (
+              <li key={app.id} className="py-2">
+                <div className="flex items-center">
+                  <img
+                    src={app.image}
+                    alt={app.appname}
+                    className="h-10 w-10 rounded-full mr-2"
+                  />
+                  <div>
+                    <p className="font-semibold">{app.appname}</p>
+                    <p className="text-sm text-gray-600">Category: {app.appcategory}</p>
+                    <p className="text-sm text-gray-600">Link: {app.applink}</p>
+                    <p className="text-sm text-gray-600">Points: {app.points}</p>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 };

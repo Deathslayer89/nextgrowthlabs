@@ -102,7 +102,7 @@ const UserDashboard = () => {
           <div key={task.id} className="border-b border-gray-200 pb-2 mb-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
-                {task.app_logo && (
+                {task.app_image && (
                   <img src={task.app_image} alt="App Logo" className="w-8 h-8 mr-2" />
                 )}
                 <div>
