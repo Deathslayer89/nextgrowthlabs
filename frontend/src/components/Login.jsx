@@ -27,7 +27,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/accounts/login/",
+        "https://nextlabs-8fsb.onrender.com/api/accounts/login/",
         {
           username: username,
           password: password,
@@ -58,71 +58,46 @@ const Login = () => {
   };
 
   return (
-    <div
-      style={{
-        maxWidth: "400px",
-        margin: "auto",
-        padding: "20px",
-        border: "1px solid #ccc",
-        borderRadius: "5px",
-      }}
-    >
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: "10px" }}>
-          <label style={{ display: "block", marginBottom: "5px" }}>
+    <div className="max-w-md mx-auto p-6 bg-white shadow-md rounded-md">
+      <h2 className="text-2xl font-semibold mb-6 text-gray-800">Login</h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="block mb-1">
             Username:
             <input
               type="text"
               name="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              style={{
-                marginLeft: "10px",
-                padding: "5px",
-                borderRadius: "3px",
-                border: "1px solid #ccc",
-              }}
+              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
             />
           </label>
         </div>
-        <div style={{ marginBottom: "10px" }}>
-          <label style={{ display: "block", marginBottom: "5px" }}>
+        <div>
+          <label className="block mb-1">
             Password:
             <input
               type="password"
               name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              style={{
-                marginLeft: "10px",
-                padding: "5px",
-                borderRadius: "3px",
-                border: "1px solid #ccc",
-              }}
+              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
             />
           </label>
         </div>
         <button
           type="submit"
-          style={{
-            padding: "10px 20px",
-            background: "#007bff",
-            color: "#fff",
-            border: "none",
-            borderRadius: "3px",
-            cursor: "pointer",
-          }}
+          className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-200"
         >
           Login
         </button>
       </form>
-      {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
-      <p style={{ marginTop: "10px" }}>
+      {error && <p className="text-red-500 mt-4">{error}</p>}
+      <p className="mt-4">
         New user?{" "}
         <a
           href="/register"
-          style={{ color: "#007bff", textDecoration: "none" }}
+          className="text-blue-500 underline hover:text-blue-700"
         >
           Register here
         </a>

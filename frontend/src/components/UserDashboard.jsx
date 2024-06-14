@@ -21,7 +21,8 @@ const UserDashboard = () => {
         }
       };
 
-      const response = await axios.get('http://localhost:8000/api/main/tasks/pending/', config);
+      const response = await axios.get('https://nextlabs-8fsb.onrender.com/api/main/tasks/pending/', config);
+      console.log(response);
       setPendingTasks(response.data);
     } catch (error) {
       console.error('Error fetching pending tasks:', error.response);
@@ -45,7 +46,7 @@ const UserDashboard = () => {
         },
       };
 
-      const response = await axios.put(`http://localhost:8000/api/main/tasks/${currentTaskId}/complete/`, formData, config);
+      const response = await axios.put(`https://nextlabs-8fsb.onrender.com/api/main/tasks/${currentTaskId}/complete/`, formData, config);
       console.log('Task completed successfully:', response.data);
 
       // Refresh user data after completing task
@@ -79,35 +80,52 @@ const UserDashboard = () => {
   };
 
   return (
-    <div style={{ maxWidth: '800px', margin: 'auto', marginTop: '50px' }}>
-      <h2>Welcome to your Dashboard</h2>
-      <div style={{ marginBottom: '20px' }}>
-        <Link to="/profile" style={{ marginRight: '10px' }}>Profile</Link>
-        <Link to="/points" style={{ marginRight: '10px' }}>Points</Link>
-        <Link to="/completed-tasks" style={{ marginRight: '10px' }}>Completed Tasks</Link>
-        <button onClick={handleLogout} style={{ marginLeft: '10px', padding: '5px 10px', backgroundColor: '#007BFF', color: '#fff', border: 'none', borderRadius: '3px', cursor: 'pointer' }}>Logout</button>
+    <div className="max-w-4xl mx-auto mt-8 p-4 bg-white shadow-lg rounded-lg">
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <h2 className="text-2xl font-semibold">Welcome to your Dashboard</h2>
+          <p className="text-gray-600 text-sm">Manage your tasks and activities here.</p>
+        </div>
+      </div>
+      
+      <div className="mb-4 flex flex-col">
+        <Link to="/profile" className="text-blue-600 mb-2">Profile</Link>
+        <Link to="/points" className="text-blue-600 mb-2">Points</Link>
+        <Link to="/completed-tasks" className="text-blue-600 mb-2">Completed Tasks</Link>
+        <button onClick={handleLogout} className="btn btn-blue self-end">Logout</button>
       </div>
 
       <div>
-        <h3>Pending Tasks</h3>
-        {pendingTasks.length === 0 && <p>No pending tasks.</p>}
+        <h3 className="text-lg font-semibold mb-4">Pending Tasks</h3>
+        {pendingTasks.length === 0 && <p className="text-gray-600">No pending tasks.</p>}
         {pendingTasks.map(task => (
-          <div key={task.id} style={{ marginBottom: '10px', borderBottom: '1px solid #ccc', paddingBottom: '10px' }}>
-            <p>{task.taskname}</p>
-            <p>{task.description}</p>
-            <button onClick={() => setCurrentTaskId(task.id)}>Complete Task</button>
+          <div key={task.id} className="border-b border-gray-200 pb-2 mb-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {task.app_logo && (
+                  <img src={task.app_image} alt="App Logo" className="w-8 h-8 mr-2" />
+                )}
+                <div>
+                  <p className="font-semibold">{task.taskname}</p>
+                  <p className="text-sm text-gray-600">{task.description}</p>
+                </div>
+              </div>
+              <button onClick={() => setCurrentTaskId(task.id)} className="btn btn-sm">Complete Task</button>
+            </div>
             {currentTaskId === task.id && (
-              <div 
-                onDrop={handleFileDrop} 
-                onDragOver={(e) => e.preventDefault()} 
-                style={{ border: '1px solid #ccc', padding: '10px', marginTop: '10px' }}
-              >
-                Drag & Drop Screenshot Here to Complete Task or 
-                <input type="file" onChange={handleFileSelect} />
+              <div className="border border-gray-300 p-4 mt-2 rounded">
+                <div 
+                  onDrop={handleFileDrop} 
+                  onDragOver={(e) => e.preventDefault()} 
+                  className="mb-2 text-center"
+                >
+                  Drag & Drop Screenshot Here to Complete Task or 
+                  <input type="file" onChange={handleFileSelect} className="mt-2"/>
+                </div>
                 {screenshotFile && (
-                  <div style={{ marginTop: '10px' }}>
-                    <p>File selected: {screenshotFile.name}</p>
-                    <button onClick={handleCompleteTask} style={{ padding: '5px 10px', backgroundColor: '#007BFF', color: '#fff', border: 'none', borderRadius: '3px', cursor: 'pointer' }}>Submit</button>
+                  <div className="text-center">
+                    <p className="text-sm text-gray-600">File selected: {screenshotFile.name}</p>
+                    <button onClick={handleCompleteTask} className="btn btn-green mt-2">Submit</button>
                   </div>
                 )}
               </div>
@@ -116,7 +134,7 @@ const UserDashboard = () => {
         ))}
       </div>
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className="text-red-500 mt-4">{error}</p>}
     </div>
   );
 };

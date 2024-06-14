@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const [profile, setProfile] = useState({});
@@ -18,7 +19,7 @@ const Profile = () => {
         }
       };
 
-      const response = await axios.get('http://localhost:8000/api/accounts/me/', config);
+      const response = await axios.get('https://nextlabs-8fsb.onrender.com/api/accounts/me/', config);
       setProfile(response.data);
     } catch (error) {
       console.error('Error fetching profile data:', error.response);
@@ -27,21 +28,24 @@ const Profile = () => {
   };
 
   if (error) {
-    return <p style={{ color: 'red' }}>{error}</p>;
+    return <p className="text-red-500">{error}</p>;
   }
 
   return (
-    <div style={{ maxWidth: '800px', margin: 'auto', marginTop: '50px' }}>
-      <h2>Profile</h2>
+    <div className="max-w-4xl mx-auto mt-8 p-4 bg-white shadow-lg rounded-lg">
+      <h2 className="text-2xl font-semibold mb-4 text-center">Profile</h2>
       {profile.username ? (
-        <div>
-          <p><strong>Username:</strong> {profile.username}</p>
-          <p><strong>Email:</strong> {profile.email}</p>
+        <div className="text-center">
+          <p className="mb-2"><strong>Username:</strong> {profile.username}</p>
+          <p className="mb-2"><strong>Email:</strong> {profile.email}</p>
           {/* Add more profile information as needed */}
         </div>
       ) : (
-        <div>Loading...</div>
+        <div className="text-center">Loading...</div>
       )}
+      <div className="text-center mt-4">
+        <Link to="/userdashboard" className="text-blue-600">Return to Dashboard</Link>
+      </div>
     </div>
   );
 };

@@ -1,4 +1,3 @@
-
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.db.models.signals import post_save
@@ -28,6 +27,7 @@ class Task(models.Model):
     description = models.TextField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
     screenshot = models.ImageField(upload_to='task_screenshots/', null=True, blank=True)
+    app_image = models.ImageField(upload_to='task_app_images/', null=True, blank=True)  # New field
 
     def __str__(self):
         return self.taskname
@@ -42,7 +42,8 @@ def create_tasks_for_new_user(sender, instance, created, **kwargs):
                 user=instance,
                 app=app,
                 taskname=f'Download {app.appname}',
-                description=f'Download and install the {app.appname} app.'
+                description=f'Download and install the {app.appname} app.',
+                app_image=app.image  # Set the app_image field to the app's image
             )
 
 # Signal to create tasks for all users when a new app is added
@@ -55,5 +56,6 @@ def create_tasks_for_new_app(sender, instance, created, **kwargs):
                 user=user,
                 app=instance,
                 taskname=f'Download {instance.appname}',
-                description=f'Download and install the {instance.appname} app.'
+                description=f'Download and install the {instance.appname} app.',
+                app_image=instance.image  # Set the app_image field to the app's image
             )

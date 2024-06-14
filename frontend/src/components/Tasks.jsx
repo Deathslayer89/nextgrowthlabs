@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const Tasks = () => {
-  const [Tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const Tasks = () => {
         }
       };
 
-      const response = await axios.get('http://localhost:8000/api/main/tasks/completed/', config);
+      const response = await axios.get('https://nextlabs-8fsb.onrender.com/api/main/tasks/completed/', config);
       setTasks(response.data);
     } catch (error) {
       console.error('Error fetching completed tasks:', error.response);
@@ -27,17 +27,17 @@ const Tasks = () => {
   };
 
   if (error) {
-    return <p style={{ color: 'red' }}>{error}</p>;
+    return <p className="text-red-500">{error}</p>;
   }
 
   return (
-    <div style={{ maxWidth: '800px', margin: 'auto', marginTop: '50px' }}>
-      <h2>Completed Tasks</h2>
-      {Tasks.length === 0 && <p>No completed tasks.</p>}
-      {Tasks.map(task => (
-        <div key={task.id} style={{ marginBottom: '10px', borderBottom: '1px solid #ccc', paddingBottom: '10px' }}>
-          <p>{task.taskname}</p>
-          <p>{task.description}</p>
+    <div className="max-w-4xl mx-auto mt-8 p-4 bg-white shadow-lg rounded-lg">
+      <h2 className="text-2xl font-semibold mb-4 text-center">Completed Tasks</h2>
+      {tasks.length === 0 && <p className="text-center">No completed tasks.</p>}
+      {tasks.map(task => (
+        <div key={task.id} className="border-b border-gray-200 pb-2 mb-4">
+          <p className="font-semibold">{task.taskname}</p>
+          <p className="text-sm text-gray-600 mb-2">{task.description}</p>
         </div>
       ))}
     </div>
