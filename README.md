@@ -95,8 +95,6 @@ used jwt token and cookie to setup AUTH
 - `GET /api/main/tasks/pending/`: lists all pending tasks.
 - `GET /api/main/tasks/completed/`: lists all completed tasks tasks
 
-- `DELETE /api/main/tasks/delete/{id}/`: Delete a task.
-
 ### Points
 
 - `GET /api/main/user-points/`: Retrieve user's total points.
