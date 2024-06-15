@@ -108,16 +108,24 @@ used jwt token and cookie to setup AUTH
 2. **Create a New Web Service**: Follow the instructions to create a new web service for both the backend and frontend.
 3. **Add Environment Variables**: Configure the necessary environment variables in the Render dashboard for both the backend and frontend like cloudinary storage and postgres sql.
 
+
+Frontend link [https://nextlabs-alpha.vercel.app](https://nextlabs-alpha.vercel.app/login)
+
+Backend link [https://nextlabs-w9ig.onrender.com](https://nextlabs-w9ig.onrender.com) (DEBUG is OFF)
+
+## Automate Delivery
+
+for this project i have used render and vercel platforms which directly deploys the latest commit in the repository .
+
+If we were to use any cloud solutions or other resources to host the site we can use jenkins or github actions to automate the process.
+
 # Problem Set 3
 
 A. Write and share a small note about your choice of system to schedule periodic tasks (such as downloading a list of ISINs every 24 hours). Why did you choose it? Is it reliable enough; Or will it scale? If not, what are the problems with it? And, what else would you recommend to fix this problem at scale in production?
 
-```
-I will go with Celery and Redis for scheduling periodic tasks in our project due to its ease of implementation, strong integration with our Python-based infrastructure, and efficient task processing. This combination will offer reliable task execution with features like persistence and automatic retries, which will be crucial for our daily ISIN list retrieval.
+**I will go with Celery and Redis for scheduling periodic tasks  due to its ease of implementation, strong integration with our Python-based infrastructure, and efficient task processing. This combination will offer reliable task execution with features like persistence and automatic retries, which will be crucial for our daily ISIN list retrieval.**
 
-However, I am mindful of potential challenges as we scale. Redis, while fast, can become a single point of failure, and task monitoring complexity will increase with volume. To mitigate these risks in production, we will need to implement strategies like Redis clustering . we may need to evaluate more comprehensive solutions like Apache Airflow to manage interdependent processes if workflow is more clustered.
-
-```
+**However, I am mindful of potential challenges as we scale. Redis, while fast, can become a single point of failure, and task monitoring complexity will increase with volume. To mitigate these risks in production, we will need to implement strategies like Redis clustering . we may need to evaluate more comprehensive solutions like Apache Airflow to manage interdependent processes if workflow is more clustered.**
 
 B. In what circumstances would you use Flask instead of Django and vice versa?
 
