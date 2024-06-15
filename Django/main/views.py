@@ -12,7 +12,7 @@ class AppCreateView(generics.CreateAPIView):
 class AppListView(generics.ListAPIView):
     queryset = App.objects.all()
     serializer_class = AppSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]
 
 class AppDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = App.objects.all()

@@ -82,8 +82,8 @@ python manage.py runserver
 
 ### Authentication
 used jwt token and cookie to setup AUTH
-* `POST /api/auth/register/`: Register a new user.
-* `POST /api/auth/login/`: User login.
+* `POST /api/accounts/register/`: Register a new user.
+* `POST /api/accounts/login/`: User login.
 
 ### Tasks
 * `GET /api/main/tasks/`: Retrieve all tasks.

@@ -22,3 +22,4 @@ urlpatterns = [
     # User Points
     path('user-points/', UserPointsView.as_view(), name='user-points'),
 ]
+
