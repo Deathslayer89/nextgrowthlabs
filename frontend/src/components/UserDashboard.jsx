@@ -54,7 +54,7 @@ const UserDashboard = () => {
         },
       };
 
-      const response = await axios.put(`{process.env.REACT_APP_BACKEND_URL}/api/main/tasks/${currentTaskId}/complete/`, formData, config);
+      const response = await axios.put(process.env.REACT_APP_BACKEND_URL+`/api/main/tasks/${currentTaskId}/complete/`, formData, config);
       console.log('Task completed successfully:', response.data);
 
       // Refresh user data after completing task
