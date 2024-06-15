@@ -54,21 +54,21 @@ print(numbers)
 
 ### Frontend Setup
 
-   ```bash
-   git clone https://github.com/yourusername/nextgrowthlabs.git
-   cd nextgrowthlabs
-   cd frontend
-   npm install
-   npm start
-   ```
+```bash
+git clone https://github.com/yourusername/nextgrowthlabs.git
+cd nextgrowthlabs
+cd frontend
+npm install
+npm start
+```
 
 ### Backend setup
 
- ```bash
- cd myapp
- python -m venv venv
- venv/scripts/activate
- pip install -r requirements.txt
+```bash
+cd myapp
+python -m venv venv
+venv/scripts/activate
+pip install -r requirements.txt
 
 
 #run django
@@ -76,29 +76,35 @@ print(numbers)
 python manage.py migrate
 python manage.py createsuperuser
 python manage.py runserver
- ```
+```
 
 ## API Endpoints
 
 ### Authentication
+
 used jwt token and cookie to setup AUTH
-* `POST /api/accounts/register/`: Register a new user.
-* `POST /api/accounts/login/`: User login.
+
+- `POST /api/accounts/register/`: Register a new user.
+- `POST /api/accounts/login/`: User login.
 
 ### Tasks
-* `GET /api/main/tasks/`: Retrieve all tasks.
-* `POST /api/main/tasks/create/`: Create a new task.
-* `PUT /api/main/tasks/update/{id}/`: Update an existing task.
-* `GET /api/main/tasks/pending/`: lists all pending tasks.
-* `GET /api/main/tasks/completed/`: lists all completed tasks tasks
 
-* `DELETE /api/main/tasks/delete/{id}/`: Delete a task.
+- `GET /api/main/tasks/`: Retrieve all tasks.
+- `POST /api/main/tasks/create/`: Create a new task.
+- `PUT /api/main/tasks/update/{id}/`: Update an existing task.
+- `GET /api/main/tasks/pending/`: lists all pending tasks.
+- `GET /api/main/tasks/completed/`: lists all completed tasks tasks
+
+- `DELETE /api/main/tasks/delete/{id}/`: Delete a task.
+
 ### Points
-* `GET /api/main/user-points/`: Retrieve user's total points.
+
+- `GET /api/main/user-points/`: Retrieve user's total points.
 
 ### Apps
-* `GET /api/main/apps/`: Retrieve all apps.
-* `POST /api/main/apps/create/`: Create a new app.
+
+- `GET /api/main/apps/`: Retrieve all apps.
+- `POST /api/main/apps/create/`: Create a new app.
 
 ## Deployment
 
@@ -106,12 +112,20 @@ used jwt token and cookie to setup AUTH
 
 1. **Create a Render and vercel Account**: Sign up for a Render and vercel accounts and connect github.
 2. **Create a New Web Service**: Follow the instructions to create a new web service for both the backend and frontend.
-3. **Add Environment Variables**: Configure the necessary environment variables in the Render dashboard for both the backend and frontend like ***cloudinary*** storage and postgres sql.
-
+3. **Add Environment Variables**: Configure the necessary environment variables in the Render dashboard for both the backend and frontend like **_cloudinary_** storage and postgres sql.
 
 Frontend link [https://nextlabs-alpha.vercel.app](https://nextlabs-alpha.vercel.app/login)
 
 Backend link [https://nextlabs-w9ig.onrender.com](https://nextlabs-w9ig.onrender.com) (DEBUG is OFF)
+
+# credentials
+
+for Admin
+( username : admin, password : admin$6634)
+
+for user( username :dinesh ,password :dinesh)
+
+- demo link [click here ](https://www.loom.com/share/dc0809650d1d43d89078e18e658800f5?sid=eaa64708-3056-4964-8fb3-3af3703da17b)
 
 ## Automate Delivery
 
@@ -123,7 +137,7 @@ If we were to use any cloud solutions or other resources to host the site we can
 
 A. Write and share a small note about your choice of system to schedule periodic tasks (such as downloading a list of ISINs every 24 hours). Why did you choose it? Is it reliable enough; Or will it scale? If not, what are the problems with it? And, what else would you recommend to fix this problem at scale in production?
 
-**I will go with Celery and Redis for scheduling periodic tasks  due to its ease of implementation, strong integration with our Python-based infrastructure, and efficient task processing. This combination will offer reliable task execution with features like persistence and automatic retries, which will be crucial for our daily ISIN list retrieval.**
+**I will go with Celery and Redis for scheduling periodic tasks due to its ease of implementation, strong integration with our Python-based infrastructure, and efficient task processing. This combination will offer reliable task execution with features like persistence and automatic retries, which will be crucial for our daily ISIN list retrieval.**
 
 **However, I am mindful of potential challenges as we scale. Redis, while fast, can become a single point of failure, and task monitoring complexity will increase with volume. To mitigate these risks in production, we will need to implement strategies like Redis clustering . we may need to evaluate more comprehensive solutions like Apache Airflow to manage interdependent processes if workflow is more clustered.**
 
