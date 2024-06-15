@@ -32,7 +32,7 @@ print(numbers)
 - [Backend Setup](#backend-setup)
 - [Deployment](#deployment)
 - [API Endpoints](#api-endpoints)
-
+- [Demo and credentials](#credentials)
 ## Technology Stack
 
 - **Frontend**: React, Tailwind CSS
