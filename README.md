@@ -106,7 +106,7 @@ used jwt token and cookie to setup AUTH
 
 1. **Create a Render and vercel Account**: Sign up for a Render and vercel accounts and connect github.
 2. **Create a New Web Service**: Follow the instructions to create a new web service for both the backend and frontend.
-3. **Add Environment Variables**: Configure the necessary environment variables in the Render dashboard for both the backend and frontend like cloudinary storage and postgres sql.
+3. **Add Environment Variables**: Configure the necessary environment variables in the Render dashboard for both the backend and frontend like ***cloudinary*** storage and postgres sql.
 
 
 Frontend link [https://nextlabs-alpha.vercel.app](https://nextlabs-alpha.vercel.app/login)
